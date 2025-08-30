@@ -1,0 +1,22 @@
+{
+  "name": "langchain-google-genai-ex-usage",
+  "version": "0.0.0",
+  "description": "ChatGoogleGenerativeAIEx Simple Usage",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@langchain/google-genai": "^0.2.16",
+    "@langchain/langgraph": "^0.4.6",
+    "@langchain/mcp-adapters": "^0.6.0",
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.5"
+  }
+}
