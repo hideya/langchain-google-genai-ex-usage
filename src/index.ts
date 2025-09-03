@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { ChatGoogleGenerativeAIEx } from '@hideya/langchain-google-genai-ex';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { HumanMessage } from "@langchain/core/messages";
 import { MultiServerMCPClient } from "@langchain/mcp-adapters";
@@ -15,20 +16,20 @@ const client = new MultiServerMCPClient({
     //   command: "npx",
     //   args: ["-y", "@h1deya/mcp-server-weather"]
     // },
-    // fetch: {
-    //   command: "uvx",
-    //   args: [
-    //     "mcp-server-fetch"
-    //   ]
-    // },
-    airtable: {
-      transport: "stdio",
-      command: "npx",
-      args: ["-y", "airtable-mcp-server"],
-      env: {
-        "AIRTABLE_API_KEY": `${process.env.AIRTABLE_API_KEY}`,
-      }
+    fetch: {
+      command: "uvx",
+      args: [
+        "mcp-server-fetch"
+      ]
     },
+    // airtable: {
+    //   transport: "stdio",
+    //   command: "npx",
+    //   args: ["-y", "airtable-mcp-server"],
+    //   env: {
+    //     "AIRTABLE_API_KEY": `${process.env.AIRTABLE_API_KEY}`,
+    //   }
+    // },
     // // NOTE: comment out "fetch" when you use "notion".
     // // They both have a tool named "fetch," which causes a conflict.
     // notion: {
@@ -72,11 +73,13 @@ const client = new MultiServerMCPClient({
   const mcpTools = await client.getTools();
 
   const llm = new ChatGoogleGenerativeAIEx({model: MODEL_NAME});
+  // const llm = new ChatGoogleGenerativeAI({model: MODEL_NAME});
+
   const agent = createReactAgent({ llm, tools: mcpTools });
 
   // const query = "Are there any weather alerts in California?";
-  // const query = "Read the top news headlines on bbc.com";
-  const query = "List all of the Airtable bases I have access to";
+  const query = "Read the top news headlines on bbc.com";
+  // const query = "List all of the Airtable bases I have access to";
   // const query = "Tell me about my Notion account";
 
   // const query = "Tell me how many of directories in `.`";
