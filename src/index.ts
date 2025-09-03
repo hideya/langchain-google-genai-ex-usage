@@ -8,26 +8,44 @@ import { HumanMessage } from '@langchain/core/messages';
 // Set up MCP client with complex tools (like Notion)
 const client = new MultiServerMCPClient({
   mcpServers: {
+    fetch: {
+      command: "uvx",
+      args: [
+        "mcp-server-fetch"
+      ]
+    },
     notion: {
       transport: "stdio",
       command: "npx",
       args: ["-y", "mcp-remote", "https://mcp.notion.com/mcp"]
-    }
+    },
+    airtable: {
+      transport: "stdio",
+      command: "npx",
+      args: ["-y", "airtable-mcp-server"],
+      env: {
+        "AIRTABLE_API_KEY": `${process.env.AIRTABLE_API_KEY}`,
+      }
+    },
   }
 });
 
 const mcpTools = await client.getTools();
 
 // Use the enhanced ChatGoogleGenerativeAI
-// const llm = new ChatGoogleGenerativeAI({ model: "google-2.5-flash" });
-const llm = new ChatGoogleGenerativeAIEx({ model: "google-2.5-flash" });
+// const llm = new ChatGoogleGenerativeAI({ model: "gemini-1.5-flash" });
+const llm = new ChatGoogleGenerativeAIEx({ model: "gemini-1.5-pro" });
 
 // Create agent with MCP tools
 const agent = createReactAgent({ llm, tools: mcpTools });
 
+const query = "Read the top news headlines on bbc.com";
+// const query = "Tell me about my Notion account";
+// const query = "Tell me about my Airtable account";
+
 // This works! No more schema errors
 const result = await agent.invoke({
-  messages: [new HumanMessage("Tell me about my Notion account")]
+  messages: [new HumanMessage(query)]
 });
 
 console.log(result.messages[result.messages.length - 1].content);
