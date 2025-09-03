@@ -33,15 +33,15 @@ const client = new MultiServerMCPClient({
 const mcpTools = await client.getTools();
 
 
-// // Option A: Using the Transform Function
-// const llm = new ChatGoogleGenerativeAI({ model: "gemini-1.5-flash" });
-// const transformedTools = transformMcpToolsForGemini(mcpTools);
-// const agent = createReactAgent({ llm, tools: transformedTools });
+// Option A: Using the Transform Function
+const llm = new ChatGoogleGenerativeAI({ model: "gemini-1.5-flash" });
+const transformedTools = transformMcpToolsForGemini(mcpTools);
+const agent = createReactAgent({ llm, tools: transformedTools });
 
 
-// Option B: Using the Drop-in Replacement Class
-const llm = new ChatGoogleGenerativeAIEx({ model: "gemini-1.5-flash" });
-const agent = createReactAgent({ llm, tools: mcpTools });
+// // Option B: Using the Drop-in Replacement Class
+// const llm = new ChatGoogleGenerativeAIEx({ model: "gemini-1.5-flash" });
+// const agent = createReactAgent({ llm, tools: mcpTools });
 
 
 const query = "Read the top news headlines on bbc.com";

@@ -8,7 +8,8 @@
   },
   "type": "module",
   "scripts": {
-    "start": "tsx src/index.ts"
+    "start": "tsx src/index.ts",
+    "clean:all": "git clean -fdxn -e .env && read -p '\nOK? ' && git clean -fdx -e .env"
   },
   "dependencies": {
     "@langchain/google-genai": "^0.2.16",
