@@ -29,9 +29,11 @@ const client = new MultiServerMCPClient({
         "AIRTABLE_API_KEY": `${process.env.AIRTABLE_API_KEY}`,
       }
     },
+    // // NOTE: comment out "fetch" when you use "notion".
+    // // They both have a tool named "fetch," which causes a conflict.
     // notion: {
     //   transport: "stdio",
-    //   "command": "npx",
+    //   "command": "npx",  // OAuth via "mcp-remote"
     //   "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
     // },
     // filesystem: {
