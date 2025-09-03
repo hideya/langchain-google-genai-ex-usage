@@ -1,55 +1,100 @@
 import "dotenv/config";
-import { ChatGoogleGenerativeAIEx, transformMcpToolsForGemini } from '@hideya/langchain-google-genai-ex';
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { createReactAgent } from '@langchain/langgraph/prebuilt';
-import { MultiServerMCPClient } from '@langchain/mcp-adapters';
-import { HumanMessage } from '@langchain/core/messages';
+import { ChatGoogleGenerativeAIEx } from '@hideya/langchain-google-genai-ex';
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
+import { HumanMessage } from "@langchain/core/messages";
+import { MultiServerMCPClient } from "@langchain/mcp-adapters";
 
-// Set up MCP client with complex tools (like Notion)
+const MODEL_NAME = "gemini-1.5-flash";
+// const MODEL_NAME = "gemini-2.5-flash";
+
+// Create MCP client and connect to servers
 const client = new MultiServerMCPClient({
   mcpServers: {
-    fetch: {
-      command: "uvx",
-      args: ["mcp-server-fetch"]
-    },
-    notion: {
-      transport: "stdio",
-      command: "npx",
-      args: ["-y", "mcp-remote", "https://mcp.notion.com/mcp"]
-    },
+    // "us-weather": {
+    //   transport: "stdio",
+    //   command: "npx",
+    //   args: ["-y", "@h1deya/mcp-server-weather"]
+    // },
+    // fetch: {
+    //   command: "uvx",
+    //   args: [
+    //     "mcp-server-fetch"
+    //   ]
+    // },
     airtable: {
       transport: "stdio",
       command: "npx",
       args: ["-y", "airtable-mcp-server"],
-      env: { "AIRTABLE_API_KEY": `${process.env.AIRTABLE_API_KEY}` }
+      env: {
+        "AIRTABLE_API_KEY": `${process.env.AIRTABLE_API_KEY}`,
+      }
     },
+    // notion: {
+    //   transport: "stdio",
+    //   "command": "npx",
+    //   "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
+    // },
+    // filesystem: {
+    //   command: "npx",
+    //   args: [
+    //     "-y",
+    //     "@modelcontextprotocol/server-filesystem",
+    //     "."  // path to a directory to allow access to
+    //   ]
+    // },
+    // github: {
+    //   transport: "http",
+    //   url: "https://api.githubcopilot.com/mcp/",
+    //   headers: {
+    //     "Authorization": `Bearer ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`
+    //   }
+    // },
+    // sqlite: {
+    //   command: "uvx",
+    //   args: [
+    //     "mcp-server-sqlite",
+    //     "--db-path",
+    //     "test-mcp-server-sqlite.sqlite3"
+    //   ]
+    // },
+    // playwright: {
+    //   command: "npx",
+    //   args: [
+    //     "@playwright/mcp@latest"
+    //   ]
+    // },
   }
 });
 
-const mcpTools = await client.getTools();
+(async () => {
+  const mcpTools = await client.getTools();
 
+  const llm = new ChatGoogleGenerativeAIEx({model: MODEL_NAME});
+  const agent = createReactAgent({ llm, tools: mcpTools });
 
-// // Option A: Using the Transform Function
-// const llm = new ChatGoogleGenerativeAI({ model: "gemini-1.5-pro" });
-// const transformedTools = transformMcpToolsForGemini(mcpTools);
-// const agent = createReactAgent({ llm, tools: transformedTools });
+  // const query = "Are there any weather alerts in California?";
+  // const query = "Read the top news headlines on bbc.com";
+  const query = "List all of the bases I have access to";
+  // const query = "Tell me about my Notion account";
 
+  // const query = "Tell me how many of directories in `.`";
+  // const query = "Tell me about my GitHub profile"
+  // const query = "Make a new table in SQLite DB and put items apple and orange " +
+  //   "with counts 123 and 345 respectively, " +
+  //   "then increment the coutns by 1, and show all the items in the table."
+  // const query = "Open the BBC.com page, then close it";
 
-// Option B: Using the Drop-in Replacement Class
-const llm = new ChatGoogleGenerativeAIEx({ model: "gemini-1.5-pro" });
-const agent = createReactAgent({ llm, tools: mcpTools });
+  console.log("\x1b[33m");  // color to yellow
+  console.log("[Q]", query);
+  console.log("\x1b[0m");  // reset the color
 
+  const messages =  { messages: [new HumanMessage(query)] };
+  const result = await agent.invoke(messages);
+  const response = result.messages[result.messages.length - 1].content;
 
-// const query = "Read the top news headlines on bbc.com";
-// const query = "Tell me about my Notion account";
-const query = "Tell me about my Airtable account";
+  console.log("\x1b[36m");  // color to cyan
+  console.log("[A]", response);
+  console.log("\x1b[0m");  // reset the color
 
-
-// This works! No more schema errors
-const result = await agent.invoke({
-  messages: [new HumanMessage(query)]
-});
-
-console.log(result.messages[result.messages.length - 1].content);
-
-await client.close();
+  await client.close();
+})();
