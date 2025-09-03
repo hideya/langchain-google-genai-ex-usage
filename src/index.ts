@@ -10,43 +10,39 @@ const client = new MultiServerMCPClient({
   mcpServers: {
     fetch: {
       command: "uvx",
-      args: [
-        "mcp-server-fetch"
-      ]
+      args: ["mcp-server-fetch"]
     },
-    // notion: {
-    //   transport: "stdio",
-    //   command: "npx",
-    //   args: ["-y", "mcp-remote", "https://mcp.notion.com/mcp"]
-    // },
-    // airtable: {
-    //   transport: "stdio",
-    //   command: "npx",
-    //   args: ["-y", "airtable-mcp-server"],
-    //   env: {
-    //     "AIRTABLE_API_KEY": `${process.env.AIRTABLE_API_KEY}`,
-    //   }
-    // },
+    notion: {
+      transport: "stdio",
+      command: "npx",
+      args: ["-y", "mcp-remote", "https://mcp.notion.com/mcp"]
+    },
+    airtable: {
+      transport: "stdio",
+      command: "npx",
+      args: ["-y", "airtable-mcp-server"],
+      env: { "AIRTABLE_API_KEY": `${process.env.AIRTABLE_API_KEY}` }
+    },
   }
 });
 
 const mcpTools = await client.getTools();
 
 
-// Option A: Using the Transform Function
-const llm = new ChatGoogleGenerativeAI({ model: "gemini-1.5-flash" });
-const transformedTools = transformMcpToolsForGemini(mcpTools);
-const agent = createReactAgent({ llm, tools: transformedTools });
+// // Option A: Using the Transform Function
+// const llm = new ChatGoogleGenerativeAI({ model: "gemini-1.5-pro" });
+// const transformedTools = transformMcpToolsForGemini(mcpTools);
+// const agent = createReactAgent({ llm, tools: transformedTools });
 
 
-// // Option B: Using the Drop-in Replacement Class
-// const llm = new ChatGoogleGenerativeAIEx({ model: "gemini-1.5-flash" });
-// const agent = createReactAgent({ llm, tools: mcpTools });
+// Option B: Using the Drop-in Replacement Class
+const llm = new ChatGoogleGenerativeAIEx({ model: "gemini-1.5-pro" });
+const agent = createReactAgent({ llm, tools: mcpTools });
 
 
-const query = "Read the top news headlines on bbc.com";
+// const query = "Read the top news headlines on bbc.com";
 // const query = "Tell me about my Notion account";
-// const query = "Tell me about my Airtable account";
+const query = "Tell me about my Airtable account";
 
 
 // This works! No more schema errors
