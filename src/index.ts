@@ -18,7 +18,7 @@ const client = new MultiServerMCPClient({
         "mcp-server-fetch==2025.4.7"
       ]
     },
-    //
+
     // // This Airtable local server (airtable-mcp-server@1.6.1) fails
     // airtable: {
     //   transport: "stdio",
@@ -28,7 +28,7 @@ const client = new MultiServerMCPClient({
     //     "AIRTABLE_API_KEY": `${process.env.AIRTABLE_API_KEY}`,
     //   }
     // },
-    //
+
     // // NOTE: comment out "fetch" when you use "notion".
     // // They both have a tool named "fetch," which causes a conflict.
     //
@@ -40,13 +40,15 @@ const client = new MultiServerMCPClient({
     //         "NOTION_TOKEN": "${NOTION_INTEGRATION_SECRET}"
     //     }
     // },
+
     // // Notion remote server has fixed the issue
     // notion: {
     //   transport: "stdio",
     //   "command": "npx",  // OAuth via "mcp-remote"
     //   "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
     // },
-    //
+
+    // // Yields no issues — just a sanity check
     // filesystem: {
     //   command: "npx",
     //   args: [
@@ -55,7 +57,8 @@ const client = new MultiServerMCPClient({
     //     "."  // path to a directory to allow access to
     //   ]
     // },
-    //
+
+    // // Yields no issues — just a sanity check
     // github: {
     //   transport: "http",
     //   url: "https://api.githubcopilot.com/mcp/",
