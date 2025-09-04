@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { ChatGoogleGenerativeAIEx, transformMcpToolsForGemini } from '@hideya/langchain-google-genai-ex';
+import { ChatGoogleGenerativeAIEx, transformMcpToolsForGemini } from '@h1deya/langchain-google-genai-ex';
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { MultiServerMCPClient } from '@langchain/mcp-adapters';
 
