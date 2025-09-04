@@ -5,38 +5,48 @@ import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { HumanMessage } from "@langchain/core/messages";
 import { MultiServerMCPClient } from "@langchain/mcp-adapters";
 
-const MODEL_NAME = "gemini-1.5-flash";
-// const MODEL_NAME = "gemini-2.5-flash";
+// const MODEL_NAME = "gemini-1.5-flash";
+const MODEL_NAME = "gemini-2.5-flash";
 
 // Create MCP client and connect to servers
 const client = new MultiServerMCPClient({
   mcpServers: {
-    // "us-weather": {
-    //   transport: "stdio",
-    //   command: "npx",
-    //   args: ["-y", "@h1deya/mcp-server-weather"]
-    // },
+    // This Fetch server (mcp-server-fetch==2025.4.7) fails
     fetch: {
       command: "uvx",
       args: [
-        "mcp-server-fetch"
+        "mcp-server-fetch==2025.4.7"
       ]
     },
+    //
+    // // This Airtable local server (airtable-mcp-server@1.6.1) fails
     // airtable: {
     //   transport: "stdio",
     //   command: "npx",
-    //   args: ["-y", "airtable-mcp-server"],
+    //   args: ["-y", "airtable-mcp-server@1.6.1"],
     //   env: {
     //     "AIRTABLE_API_KEY": `${process.env.AIRTABLE_API_KEY}`,
     //   }
     // },
+    //
     // // NOTE: comment out "fetch" when you use "notion".
     // // They both have a tool named "fetch," which causes a conflict.
+    //
+    // // Notion local server (@notionhq/notion-mcp-server@1.9.0) fails
+    // "notion": {
+    //     "command": "npx",
+    //     "args": ["-y", "@notionhq/notion-mcp-server@1.9.0"],
+    //     "env": {
+    //         "NOTION_TOKEN": "${NOTION_INTEGRATION_SECRET}"
+    //     }
+    // },
+    // // Notion remote server has fixed the issue
     // notion: {
     //   transport: "stdio",
     //   "command": "npx",  // OAuth via "mcp-remote"
     //   "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
     // },
+    //
     // filesystem: {
     //   command: "npx",
     //   args: [
@@ -45,26 +55,13 @@ const client = new MultiServerMCPClient({
     //     "."  // path to a directory to allow access to
     //   ]
     // },
+    //
     // github: {
     //   transport: "http",
     //   url: "https://api.githubcopilot.com/mcp/",
     //   headers: {
     //     "Authorization": `Bearer ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`
     //   }
-    // },
-    // sqlite: {
-    //   command: "uvx",
-    //   args: [
-    //     "mcp-server-sqlite",
-    //     "--db-path",
-    //     "test-mcp-server-sqlite.sqlite3"
-    //   ]
-    // },
-    // playwright: {
-    //   command: "npx",
-    //   args: [
-    //     "@playwright/mcp@latest"
-    //   ]
     // },
   }
 });
@@ -77,17 +74,11 @@ const client = new MultiServerMCPClient({
 
   const agent = createReactAgent({ llm, tools: mcpTools });
 
-  // const query = "Are there any weather alerts in California?";
   const query = "Read the top news headlines on bbc.com";
   // const query = "List all of the Airtable bases I have access to";
   // const query = "Tell me about my Notion account";
-
   // const query = "Tell me how many of directories in `.`";
   // const query = "Tell me about my GitHub profile"
-  // const query = "Make a new table in SQLite DB and put items apple and orange " +
-  //   "with counts 123 and 345 respectively, " +
-  //   "then increment the coutns by 1, and show all the items in the table."
-  // const query = "Open the BBC.com page, then close it";
 
   console.log("\x1b[33m");  // color to yellow
   console.log("[Q]", query);
