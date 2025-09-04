@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { ChatGoogleGenerativeAIEx } from '@hideya/langchain-google-genai-ex';
+import { ChatGoogleGenerativeAIEx } from '@h1deya/langchain-google-genai-ex';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { HumanMessage } from "@langchain/core/messages";
@@ -77,7 +77,7 @@ const client = new MultiServerMCPClient({
 
   const agent = createReactAgent({ llm, tools: mcpTools });
 
-  const query = "Read the top news headlines on bbc.com";
+  const query = "Fetch https://news.ycombinator.com and summarize";
   // const query = "List all of the Airtable bases I have access to";
   // const query = "Tell me about my Notion account";
   // const query = "Tell me how many of directories in `.`";
