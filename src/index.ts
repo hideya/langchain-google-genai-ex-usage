@@ -79,7 +79,7 @@ const client = new MultiServerMCPClient({
   const query = "Read https://en.wikipedia.org/wiki/MIT_License and summarize";
   // const query = "List all of the Airtable bases I have access to";
   // const query = "Tell me about my Notion account";
-  // const query = "Tell me how many of directories in `.`";
+  // const query = "Tell me how many directories are in `.`";
   // const query = "Tell me about my GitHub profile"
 
   console.log("\x1b[33m");  // color to yellow
