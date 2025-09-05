@@ -12,6 +12,7 @@
     "clean:all": "git clean -fdxn -e .env && read -p '\nOK? ' && git clean -fdx -e .env"
   },
   "dependencies": {
+    "@h1deya/langchain-google-genai-ex": "^0.0.0",
     "@langchain/google-genai": "^0.2.16",
     "@langchain/langgraph": "^0.4.6",
     "@langchain/mcp-adapters": "^0.6.0",

@@ -1,9 +1,9 @@
 import "dotenv/config";
 import { ChatGoogleGenerativeAIEx } from '@h1deya/langchain-google-genai-ex';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
+import { MultiServerMCPClient } from "@langchain/mcp-adapters";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { HumanMessage } from "@langchain/core/messages";
-import { MultiServerMCPClient } from "@langchain/mcp-adapters";
 
 // const MODEL_NAME = "gemini-1.5-flash";
 const MODEL_NAME = "gemini-2.5-flash";
@@ -76,8 +76,7 @@ const client = new MultiServerMCPClient({
   // const llm = new ChatGoogleGenerativeAI({model: MODEL_NAME});
 
   const agent = createReactAgent({ llm, tools: mcpTools });
-
-  const query = "Fetch https://news.ycombinator.com and summarize";
+  const query = "Read https://en.wikipedia.org/wiki/MIT_License and summarize";
   // const query = "List all of the Airtable bases I have access to";
   // const query = "Tell me about my Notion account";
   // const query = "Tell me how many of directories in `.`";
