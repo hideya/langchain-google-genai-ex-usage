@@ -8,6 +8,9 @@ import { HumanMessage } from "@langchain/core/messages";
 // const MODEL_NAME = "gemini-1.5-flash";
 const MODEL_NAME = "gemini-2.5-flash";
 
+// Uncomment the following to enable verbose logging
+// process.env.LANGCHAIN_GOOGLE_GENAI_EX_VERBOSE = "true";
+
 // Create MCP client and connect to servers
 const client = new MultiServerMCPClient({
   mcpServers: {
