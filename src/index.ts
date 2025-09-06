@@ -76,7 +76,7 @@ const client = new MultiServerMCPClient({
   // const llm = new ChatGoogleGenerativeAI({model: MODEL_NAME});
 
   const agent = createReactAgent({ llm, tools: mcpTools });
-  const query = "Read https://en.wikipedia.org/wiki/MIT_License and summarize";
+  const query = "Read https://en.wikipedia.org/wiki/LangChain and summarize";
   // const query = "List all of the Airtable bases I have access to";
   // const query = "Tell me about my Notion account";
   // const query = "Tell me how many directories are in `.`";
