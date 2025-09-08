@@ -1,19 +1,28 @@
 import "dotenv/config";
 import { ChatGoogleGenerativeAIEx } from '@h1deya/langchain-google-genai-ex';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
-import { MultiServerMCPClient } from "@langchain/mcp-adapters";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { HumanMessage } from "@langchain/core/messages";
+import { MultiServerMCPClient } from "@langchain/mcp-adapters";
 
 // const MODEL_NAME = "gemini-1.5-flash";
 const MODEL_NAME = "gemini-2.5-flash";
 
 // Uncomment the following to enable verbose logging
-// process.env.LANGCHAIN_GOOGLE_GENAI_EX_VERBOSE = "true";
+process.env.LANGCHAIN_GOOGLE_GENAI_EX_VERBOSE = "true";
 
 // Create MCP client and connect to servers
 const client = new MultiServerMCPClient({
   mcpServers: {
+    // Very simple and yields no issues, only a sanity check
+    "us-weather": {  // US weather only
+      command: "npx",
+      args: [
+        "-y",
+        "@h1deya/mcp-server-weather"
+      ]
+    },
+
     // This Fetch server (mcp-server-fetch==2025.4.7) fails
     fetch: {
       command: "uvx",
@@ -32,9 +41,9 @@ const client = new MultiServerMCPClient({
     //   }
     // },
 
-    // // NOTE: comment out "fetch" when you use "notion".
+    // // **NOTE:** comment out "fetch" when you use "notion".
     // // They both have a tool named "fetch," which causes a conflict.
-    //
+
     // // Notion local server (@notionhq/notion-mcp-server@1.9.0) fails
     // "notion": {
     //     "command": "npx",
@@ -51,7 +60,7 @@ const client = new MultiServerMCPClient({
     //   "args": ["-y", "mcp-remote", "https://mcp.notion.com/mcp"],
     // },
 
-    // // Yields no issues — just a sanity check
+    // // Yields no issues, only a sanity check
     // filesystem: {
     //   command: "npx",
     //   args: [
@@ -61,13 +70,36 @@ const client = new MultiServerMCPClient({
     //   ]
     // },
 
-    // // Yields no issues — just a sanity check
+    // // Yields no issues, only a sanity check
     // github: {
     //   transport: "http",
     //   url: "https://api.githubcopilot.com/mcp/",
     //   headers: {
     //     "Authorization": `Bearer ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`
     //   }
+    // },
+
+    // // Yields no issues, only a sanity check
+    // slack: {
+    //   command: "npx",
+    //   args: [
+    //     "-y",
+    //     "@teamsparta/mcp-server-slack"
+    //   ],
+    //   env: {
+    //     "SLACK_BOT_TOKEN": `${process.env.SLACK_BOT_TOKEN}`,
+    //     "SLACK_TEAM_ID": `${process.env.SLACK_TEAM_ID}`,
+    //     "SLACK_CHANNEL_IDS": `${process.env.SLACK_CHANNEL_IDS}`
+    //   },
+    // },
+
+    // // Yields no issues, only a sanity check
+    // playwright: {
+    //   command: "npx",
+    //   args: [
+    //     "-y",
+    //     "@playwright/mcp@latest"
+    //   ]
     // },
   }
 });
@@ -79,11 +111,14 @@ const client = new MultiServerMCPClient({
   // const llm = new ChatGoogleGenerativeAI({model: MODEL_NAME});
 
   const agent = createReactAgent({ llm, tools: mcpTools });
-  const query = "Read https://en.wikipedia.org/wiki/LangChain and summarize";
+
+  const query = "Read the top news headlines on bbc.com";
   // const query = "List all of the Airtable bases I have access to";
   // const query = "Tell me about my Notion account";
-  // const query = "Tell me how many directories are in `.`";
-  // const query = "Tell me about my GitHub profile"
+  // const query = "Tell me how many of directories in `.`";
+  // const query = "Tell me about my GitHub profile";
+  // const query = "Please list all the Slack users";
+  // const query = "Open the BBC.com page, then close it";
 
   console.log("\x1b[33m");  // color to yellow
   console.log("[Q]", query);

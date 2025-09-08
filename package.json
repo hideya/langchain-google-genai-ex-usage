@@ -9,6 +9,7 @@
   "type": "module",
   "scripts": {
     "start": "tsx src/index.ts",
+    "many-mcps": "tsx src/many-mcps.ts",
     "clean:all": "git clean -fdxn -e .env && read -p '\nOK? ' && git clean -fdx -e .env"
   },
   "dependencies": {
