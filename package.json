@@ -1,6 +1,6 @@
 {
   "name": "langchain-google-genai-ex-usage",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "ChatGoogleGenerativeAIEx Simple Usage",
   "license": "MIT",
   "engines": {
@@ -9,14 +9,13 @@
   "type": "module",
   "scripts": {
     "start": "tsx src/index.ts",
-    "many-mcps": "tsx src/many-mcps.ts",
     "clean:all": "git clean -fdxn -e .env && read -p '\nOK? ' && git clean -fdx -e .env"
   },
   "dependencies": {
-    "@h1deya/langchain-google-genai-ex": "^0.0.1",
-    "@langchain/google-genai": "^0.2.16",
-    "@langchain/langgraph": "^0.4.6",
-    "@langchain/mcp-adapters": "^0.6.0",
+    "@h1deya/langchain-google-genai-ex": "^0.1.0",
+    "@langchain/google-genai": ">=0.2.16",
+    "@langchain/mcp-adapters": ">=0.6.0",
+    "langchain": "^1.2.18",
     "dotenv": "^17.2.1"
   },
   "devDependencies": {

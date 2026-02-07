@@ -13,12 +13,3 @@ code .env  # configure environment variables as needed
 
 npm start
 ```
-
-**Testing with additional MCP servers**
-
-[This test file](./src/many-mcps.ts) contains example configurations of 8 MCP servers.  
-Update the configurations as needed, then run the file by:
-
-```bash
-npm run many-mcps
-```
