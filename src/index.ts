@@ -13,13 +13,15 @@ const MODEL_NAME = "gemini-2.5-flash";
 
 const client = new MultiServerMCPClient({
   mcpServers: {
-    // This Fetch server has issues
+    // This Fetch local server has schema issues
+    // https://pypi.org/project/mcp-server-fetch/
     fetch: {
       command: "uvx",
       args: ["mcp-server-fetch==2025.4.7"]
     },
 
-    // // This Airtable local server has issues
+    // // This Airtable local server has schema issues
+    // // https://www.npmjs.com/package/airtable-mcp-server
     // airtable: {
     //   transport: "stdio",
     //   command: "npx",
