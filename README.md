@@ -13,3 +13,7 @@ code .env  # configure environment variables as needed
 
 npm start
 ```
+
+## License
+
+[MIT](./LICENSE)
