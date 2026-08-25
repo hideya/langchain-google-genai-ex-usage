@@ -1,6 +1,6 @@
 {
   "name": "langchain-google-genai-ex-usage",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "ChatGoogleGenerativeAIEx Simple Usage",
   "license": "MIT",
   "engines": {
@@ -13,7 +13,7 @@
     "clean:all": "git clean -fdxn -e .env && read -p '\nOK? ' && git clean -fdx -e .env"
   },
   "dependencies": {
-    "@h1deya/langchain-google-genai-ex": "^0.2.4",
+    "@h1deya/langchain-google-genai-ex": "^0.2.5",
     "@langchain/google-genai": "^2.3.0",
     "@langchain/mcp-adapters": "^1.1.4",
     "dotenv": "^17.2.1",
