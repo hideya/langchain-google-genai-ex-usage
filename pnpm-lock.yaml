@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@h1deya/langchain-google-genai-ex':
-        specifier: ^0.2.5
-        version: 0.2.5(@langchain/google-genai@2.3.4(@langchain/core@1.3.0))
+        specifier: ^0.2.6
+        version: 0.2.6(@langchain/google-genai@2.3.4(@langchain/core@1.3.0))
       '@langchain/google-genai':
         specifier: ^2.3.4
         version: 2.3.4(@langchain/core@1.3.0)
@@ -199,11 +199,11 @@ packages:
     resolution: {integrity: sha512-MqO+MLfM6kjxcKoy0p1wRzG3b4ZZXtPI+z2IE26UogS2Cm/XHO+7gGRBh6gcJsOiIVoH93UwKvW4HdgiOZCy9Q==}
     engines: {node: '>=18.0.0'}
 
-  '@h1deya/langchain-google-genai-ex@0.2.5':
-    resolution: {integrity: sha512-05JR01JqsBQEi7sktb9l53WlfWsbL+e6ni0kU+f+T1aefwXQFA1i7LP3Pxlu+rrJaohDzNZRpn2rQF8Fub8QzQ==}
+  '@h1deya/langchain-google-genai-ex@0.2.6':
+    resolution: {integrity: sha512-Ck8DR5mLfNbdh1BOUGNBfB5OFrBbP1j3OyYJpXCtJ1A9TNub9L9U3Qp4+Pch5dP90W2THYQxT2ZFBUcFzmGuXw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@langchain/google-genai': '>=0.2.16 <3'
+      '@langchain/google-genai': '>=0.2.16'
 
   '@hono/node-server@2.1.5':
     resolution: {integrity: sha512-MgP/I06GdvsilDspMk/qmRzpk8LOUStP6jFAbSRi40W09DhoyUn+Mj7eyKICPqeYKybOjVFLVIAQzvu1bfIa7Q==}
@@ -813,7 +813,7 @@ snapshots:
 
   '@google/generative-ai@0.24.1': {}
 
-  '@h1deya/langchain-google-genai-ex@0.2.5(@langchain/google-genai@2.3.4(@langchain/core@1.3.0))':
+  '@h1deya/langchain-google-genai-ex@0.2.6(@langchain/google-genai@2.3.4(@langchain/core@1.3.0))':
     dependencies:
       '@langchain/google-genai': 2.3.4(@langchain/core@1.3.0)
 
